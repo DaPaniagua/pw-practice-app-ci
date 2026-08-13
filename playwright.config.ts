@@ -6,12 +6,25 @@ require('dotenv').config();
 
 export default defineConfig<TestOptions>({
   retries: 0,
-  reporter: 'html',
+  reporter: [
+    process.env.CI ? ["dot"] : ["list"],
+    [
+      "@argos-ci/playwright/reporter",
+      {
+        uploadToArgos: !!process.env.CI,
+      },
+    ],
+    ['html']
+  ],
   use: {
     baseURL: 'https://playground.bondaracademy.com/',
     globalsQaURL: 'https://playground.bondaracademy.com/pages/iot-dashboard',
 
     trace: 'on-first-retry',
+    screenshot: "only-on-failure",
+    launchOptions: {
+      args: ["--disable-lcd-text", "--font-render-hinting=none"],
+    },
     video: {
       mode: 'off',
       size: {width: 1920, height: 1080},
