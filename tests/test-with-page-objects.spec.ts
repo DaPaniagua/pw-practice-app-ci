@@ -35,7 +35,7 @@ test('Parametrized page object methods @block', async ({ page }) => {
     await pageObjectManager.datePickerPage.selectDatepickerWithRangeFromToday(5, 10);
 });
 
-test.only('testing with argos ci', async ({ page }) => {
+test.only('testing with argos CI', async ({ page }) => {
     const pm = new PageManager(page);
 
     await pm.navigationPage.navigateToFormLayoutPage();
