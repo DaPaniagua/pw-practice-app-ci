@@ -1,0 +1,19 @@
+name: Argos
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  argos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
